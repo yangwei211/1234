@@ -32,4 +32,7 @@ class TestDemo:
 @pytest.mark.parametrize('b', [1, 2, 3])
 @pytest.mark.parametrize('a,d', [['int', 'a'], ['string', 'b'], ['float', 'c']])
 def test_ab(a, d, b, c):
-    print(a, b, c, d)
+    # print(a, b, c, d)
+    assert True
+    assert False
+    assert 1 == 2
