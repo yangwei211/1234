@@ -28,3 +28,20 @@ class BasePage:
             self.driver.implicitly_wait(3)
         else:
             self.driver = base_driver
+
+    def find(self, by, ele = None):
+        """
+        :param by: 定位方式 css, xpath, id
+        :param ele: 元素定位信息
+        :return:
+        """
+        # 两种传入定位元素的方式，提高代码的兼容性
+        # 如果传入的是元祖,那就只有一个参数
+        if ele == None:
+            # 比如传入(By.ID, "username")
+            # * 的作用是 解元祖 self.driver.find_element(*username) 等同于
+            # self.driver.find_element(By.ID, "username")
+            return self.driver.find_element(*by)
+        else:
+            return self.driver.find_element(by, ele)
+
