@@ -3,6 +3,7 @@ __author__ = 'jaxon'
 __time__ = '2021/4/15 下午8:28'
 __desc__ = ''
 """
+import time
 from time import sleep
 
 import yaml
@@ -42,8 +43,18 @@ class TestWework:
         # 获取cookie信息
         cookie = self.driver.get_cookies()
         # 把cookie存如yaml文件内
-        with open("data.yaml","w",encoding="UTF-8") as f:
+        with open("../test_web_wechat/testcases/data.yaml", "w", encoding="UTF-8") as f:
             yaml.dump(cookie,f)
+
+def test_save_cookei():
+    driver = webdriver.Chrome()
+    driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?")
+    time.sleep(20)
+    cookie = driver.get_cookies()
+    # 把cookie存如yaml文件内
+    with open("../test_web_wechat/testcases/data.yaml", "w", encoding="UTF-8") as f:
+        yaml.dump(cookie, f)
+
 
 def test_cookie():
     # 实例化 driver
@@ -64,7 +75,7 @@ def test_cookie_v2():
     driver = webdriver.Chrome()
     # 访问扫码登录页面
     driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?")
-    with open("data.yaml", encoding="UTF-8") as f:
+    with open("../test_web_wechat/testcases/data.yaml", encoding="UTF-8") as f:
         yaml_data = yaml.safe_load(f)
         print(yaml_data)
         for cookie in yaml_data:

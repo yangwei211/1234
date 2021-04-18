@@ -8,6 +8,7 @@ class TestAddMember:
     """
 
 
+
     def test_add_member(self):
         main_page = MainPage()
                # 1. 跳转到添加成员页面  2. 添加成员   3. 获取成员列表
