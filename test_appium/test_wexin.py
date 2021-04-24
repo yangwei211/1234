@@ -15,8 +15,8 @@ from selenium.common.exceptions import NoSuchElementException
 
 class TestWX:
     def setup_class(self):
+        # 生成测试数据的第三方库
         self.faker = Faker('zh-CN')
-
         caps = {}
         caps["platformName"] = "android"
         caps["appPackage"] = "com.tencent.wework"
@@ -33,14 +33,15 @@ class TestWX:
         self.driver.implicitly_wait(5)
 
     def setup(self):
-        # 初始化
+        # 初始化，首页的启动
         self.driver.launch_app()
 
     def teardown(self):
+        # 首页的关闭
         self.driver.close_app()
 
     def teardown_class(self):
-        # 资源消毁
+        # 资源消毁，消毁driver
         self.driver.quit()
 
     def test_daka(self):
@@ -66,7 +67,6 @@ class TestWX:
 
         # 滑动查找，通过外部传递的num次数，决定查找次数
         for i in range(0, num):
-
             try:
                 element = self.driver.find_element(MobileBy.XPATH, f"//*[@text='{text}']")
                 self.driver.implicitly_wait(5)
