@@ -7,14 +7,15 @@ __time__ = '2021/4/24 4:16 下午'
 from appium.webdriver.common.mobileby import MobileBy
 from appium.webdriver.webdriver import WebDriver
 
+from test_appium.page.base_page import BasePage
 from test_appium.page.contactlist_page import ContactListPage
 
 
-class MainPage:
-    def __init__(self, driver: WebDriver):
-        self.driver = driver
+class MainPage(BasePage):
+    contact_element = (MobileBy.XPATH, "//*[@text='通讯录']")
 
     def goto_contactlist(self):
         # click 通讯录
-        self.driver.find_element(MobileBy.XPATH, "//*[@text='通讯录']").click()
+        self.find(*self.contact_element).click()
+        # self.driver.find_element(MobileBy.XPATH, "//*[@text='通讯录']").click()
         return ContactListPage(self.driver)
