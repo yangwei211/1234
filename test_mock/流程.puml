@@ -1,0 +1,14 @@
+@startuml
+
+start
+: 设定mock规则;
+: 发起请求;
+if (请求和mock规则匹配) then (yes)
+  :返回模拟响应值;
+else (no)
+  :返回原本的响应值;
+endif
+
+stop
+
+@enduml
