@@ -22,7 +22,9 @@ class Events:
 
     def recursion(self, data, int_data = 1):
         """
+
         :param data: 原始的数据
+        :param int_data: 倍增的倍数
         :return: 在原始数据基础之上，修改float 类型，对float 类型做数据翻倍操作
         """
         #
@@ -38,7 +40,8 @@ class Events:
             # data_new = []
             # for i in data:
             #     data_new.append(recursion(i))
-            #
+
+            # 40行~42 行等同于45行
             data = [self.recursion(i, int_data) for i in data]
         elif isinstance(data, float):
             # 对浮点型做倍增

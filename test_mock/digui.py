@@ -1,17 +1,17 @@
 import json
 
 
-def recursion(data):
+def recursion(base_data, int_data =1):
     """
-    :param data: 原始的数据
+    :param base_data: 原始的数据
     :return: 在原始数据基础之上，修改float 类型，对float 类型做数据翻倍操作
     """
     #
-    if isinstance(data, dict):
+    if isinstance(base_data, dict):
         # 如果是字典类型，继续递归value值
-        for k, v in data.items():
-            data[k] = recursion(v)
-    elif isinstance(data, list):
+        for k, v in base_data.items():
+            base_data[k] = recursion(v)
+    elif isinstance(base_data, list):
         # 递归算法，如果是list 就继续遍历列表中的元素
         # data_new = []
         # for item in data:
@@ -20,18 +20,18 @@ def recursion(data):
         # for i in data:
         #     data_new.append(recursion(i))
         #
-        data = [recursion(i) for i in data]
-    elif isinstance(data, float):
+        base_data = [recursion(i, int_data) for i in base_data]
+    elif isinstance(base_data, float):
         # 对浮点型做倍增
-        data = data*2
+        base_data = base_data * int_data
     else:
-        data = data
+        base_data = base_data
 
-    return data
+    return base_data
 
 if __name__ == '__main__':
     test_data = json.load(open("quote.json", encoding="utf-8"))
-    print(json.dumps(recursion(test_data), indent=2))
+    print(json.dumps(recursion(test_data, 2), indent=2))
 
 
 
