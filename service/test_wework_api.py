@@ -9,6 +9,7 @@ class TestWeWork:
     def setup_class(self):
         self.wework = WeWork()
         self.wework.get_token()
+        raise Exception("error")
 
     def test_search(self):
         r = self.wework.search()
@@ -26,8 +27,9 @@ class TestWeWork:
         assert r.status_code == 200
         assert r.json()['errcode'] == 0
 
-    def test_tag_delete(self):
+        # todo: 判断新增内容是否在search结果里
+
         r = self.wework.delete("xxxxx")
         assert r.json()['errcode'] == 0
         r = self.wework.search()
-        # todo: 业务逻辑验证
+        # todo: 业务逻辑验证 判断删除的内容是否已经消失在search结果里

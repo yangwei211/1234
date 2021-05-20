@@ -4,7 +4,8 @@ import requests
 
 
 class WeWork:
-    token=None
+    # 可以不用加的，只是为了声明类型，python也开始支持类型了，是python3的一个技巧
+    token: str = None
 
     def get_token(self):
         r = requests.get(
@@ -16,7 +17,7 @@ class WeWork:
         )
         print(json.dumps(r.json(), indent=2, ensure_ascii=False))
         assert r.status_code == 200
-        self.token = r.json()['access_token']
+        # self.token = r.json()['access_token']
 
     def search(self):
         r = requests.post(
@@ -26,7 +27,6 @@ class WeWork:
         )
         print(json.dumps(r.json(), indent=2, ensure_ascii=False))
         return r
-
 
     def add(self, tag_name, group_name):
         r = requests.post(
