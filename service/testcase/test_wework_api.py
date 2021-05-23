@@ -1,4 +1,4 @@
-from service.wework_api import WeWork
+from service.api.wework_api import WeWork
 
 
 class TestWeWork:
@@ -9,7 +9,6 @@ class TestWeWork:
     def setup_class(self):
         self.wework = WeWork()
         self.wework.get_token()
-        raise Exception("error")
 
     def test_search(self):
         r = self.wework.search()

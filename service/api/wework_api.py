@@ -17,7 +17,7 @@ class WeWork:
         )
         print(json.dumps(r.json(), indent=2, ensure_ascii=False))
         assert r.status_code == 200
-        # self.token = r.json()['access_token']
+        self.token = r.json()['access_token']
 
     def search(self):
         r = requests.post(
