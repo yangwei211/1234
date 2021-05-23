@@ -1,3 +1,4 @@
+from service.api.tag.tag import Tag
 from service.api.wework_api import WeWork
 
 
@@ -7,28 +8,28 @@ class TestWeWork:
     #     self.token=""
 
     def setup_class(self):
-        self.wework = WeWork()
-        self.wework.get_token()
+        self.tag = Tag()
+        self.tag.get_token()
 
     def test_search(self):
-        r = self.wework.search()
+        r = self.tag.search()
         assert r.status_code == 200
         assert r.json()['errcode'] == 0
 
     def test_tag(self):
         # 新增标签
         # todo: 数据唯一性，1.提前清理数据（推荐） 2.使用时间戳代表唯一性
-        r = self.wework.add(tag_name="tag_052001", group_name="tag_group_052001")
+        r = self.tag.add(tag_name="tag_052001", group_name="tag_group_052001")
         assert r.json()['errcode'] == 0
 
         # todo：代码冗余
-        r = self.wework.search()
+        r = self.tag.search()
         assert r.status_code == 200
         assert r.json()['errcode'] == 0
 
         # todo: 判断新增内容是否在search结果里
 
-        r = self.wework.delete("xxxxx")
+        r = self.tag.delete("xxxxx")
         assert r.json()['errcode'] == 0
-        r = self.wework.search()
+        r = self.tag.search()
         # todo: 业务逻辑验证 判断删除的内容是否已经消失在search结果里
