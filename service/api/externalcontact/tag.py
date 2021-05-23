@@ -8,6 +8,10 @@ from service.api.wework_api import WeWork
 
 class Tag(WeWork):
     def search(self):
+        """
+
+        :return:
+        """
         data = {
             "url": "https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_corp_tag_list",
             "method": "post",

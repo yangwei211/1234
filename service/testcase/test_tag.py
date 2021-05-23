@@ -1,10 +1,11 @@
 from jsonpath import jsonpath
 
-from service.api.tag.tag import Tag
+from service.api.externalcontact.tag import Tag
 from service.api.wework_api import WeWork
+from service.testcase.base_testcase import BaseTestCase
 
 
-class TestTag:
+class TestTag(BaseTestCase):
     # pytest识别是否是测试方法的时候，会排除带有初始化方法的类，所以不能加__init__
     # def __init__(self):
     #     self.token=""
@@ -14,6 +15,7 @@ class TestTag:
         self.tag.get_token()
         self.tag.clear()
         # todo: 追加测试数据
+        self.prepare_testdata()
 
     def teardown_class(self):
         # 如果进程被临时终止，teardown*方法可能得不到执行，所以为了稳定，尽量不要在teardown*中放入重要的逻辑。
@@ -80,10 +82,20 @@ class TestTag:
 
     def test_delete(self):
         # 删除数据与添加数据尽量区分开，失败的时候可以更好的直观看到feature失败
+        # 准备数据的两个方案 1，添加（不要复用上一步的用例，独立添加，除非添加是个很重的工作）2. setup中添加一批可用数据
 
         # todo: 判断新增内容是否在search结果里
 
+        self.tag.add([{'name': 'tag_0520021'}], group_name='tag_group_0520020')
+        # 不需要在调用search方法验证add结果
         r = self.tag.delete("xxxxx")
         assert r.json()['errcode'] == 0
         r = self.tag.search()
         # todo: 业务逻辑验证 判断删除的内容是否已经消失在search结果里
+
+    def test_smoke_flow(self):
+        # 冒烟测试
+        # 线上巡检测试
+        # 重要的测试数据
+        # 全流程测试用例 添加 修改 删除 查询
+        pass
