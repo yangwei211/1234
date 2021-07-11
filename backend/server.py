@@ -12,6 +12,9 @@ ip = "134.175.28.202"
 port = "8888"
 database = "test_ck18"
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{pwd}@{ip}:{port}/{database}?charset=utf8'
+# 解决warning 问题
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
 db = SQLAlchemy(app)
 
 
