@@ -127,23 +127,17 @@ export default {
 
   methods: {
     initialize() {
-      this.desserts = [
-        {
-          id: "Frozen Yogurt",
-          nodeid: 159,
-          remark: 6.0
-        },
-        {
-          id: 1,
-          nodeid: 159,
-          remark: 6.0
-        },
-        {
-          id: 2,
-          nodeid: 159,
-          remark: 6.0
-        }
-      ];
+      // then 等待获取4到接口的响应信息
+      this.$api.testcase.getTestcase().then((result) => {
+        console.log(result)
+        // 展示的数据信息尽量与接口的返回信息能一一对应，要不然需要做
+        // 数据的二次处理
+        this.desserts = result["data"]["msg"]["data"]
+
+      }).catch((err) => {
+        console.log(err)
+      });
+
     },
 
     editItem(item) {
@@ -160,7 +154,13 @@ export default {
 
     deleteItemConfirm() {
       console.log("删除用例执行这里");
-      this.desserts.splice(this.editedIndex, 1);
+      let delId = this.editedItem["id"]
+      // 有一些接口需要传入接口信息，在调用接口函数传入
+      this.$api.testcase.deleteTestcase(delId).then((result) => {
+        console.log(result)
+        // 当拿到接口的响应值之后应该刷新页面
+        this.initialize()
+      })
       this.closeDelete();
     },
 
@@ -183,10 +183,17 @@ export default {
     save() {
       if (this.editedIndex > -1) {
         console.log("编辑用例");
+        this.$api.testcase.updateTestcase(this.editedItem).then((result) => {
+          console.log(result)
+          this.initialize()
+        })
         // Object.assign(this.desserts[this.editedIndex], this.editedItem)
       } else {
-        console.log("新建用例");
-
+        // 调用新建用例接口
+        this.$api.testcase.addTestcase(this.editedItem).then((result) => {
+          console.log(result)
+          this.initialize()
+        })
         // this.desserts.push(this.editedItem)
       }
       this.close();

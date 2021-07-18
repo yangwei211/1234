@@ -3,9 +3,13 @@ import json
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+
 
 app = Flask(__name__)
 api = Api(app)
+# 解决跨域
+CORS(app, supports_credentials=True)
 username = "root"
 pwd = "123456"
 ip = "134.175.28.202"
@@ -68,7 +72,9 @@ class TestCaseService(Resource):
         # 从接口中拿到的字典数据进行解包，使用关键字传参传入Testcase
         testcase = Testcase(**case_data)
         # 如果数据字段存在列表，需要做一次转换
-        testcase.nodeid = json.dumps(request.json.get("nodeid"))
+        # 每次如果dumps，那么字符串会添加""
+        # testcase.nodeid = json.dumps(request.json.get("nodeid"))
+
         db.session.add(testcase)
         db.session.commit()
         return {"error": 0, "msg": "post success"}
@@ -88,6 +94,8 @@ class TestCaseService(Resource):
             update(request.json)
         app.logger.info(f"数据已修改，id{case}被修改为{request.json}")
         # 返回被修改数据的id
+        # 修改之后commit到数据库
+        db.session.commit()
         return {"error": 0, "msg": {"id": case}}
 
 
