@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Testcase from '../views/Testcase.vue'
+import Layout from '../views/Layout.vue'
+import Task from '../views/Task.vue'
 
 // 加载了VueRouter
 Vue.use(VueRouter)
@@ -13,13 +14,25 @@ const routes = [
     // 指定路由
     path: '/',
     // 指定渲染哪个组件
-    component: Home
+    // component: Home
+    // 指定重定向页面
+    redirect: "/layout"
   },
   {
-    // 指定路由
-    path: '/testcase',
-    // 指定渲染哪个组件
-    component: Testcase
+    path: "/layout",
+    component: Layout,
+    children:[
+      {
+        path: "testcase",
+        name: "testcase",
+        component: Testcase
+      },
+      {
+        path: "task",
+        name: "task",
+        component: Task
+      }
+    ]
   },
   {
     path: '/about',
