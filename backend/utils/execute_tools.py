@@ -16,6 +16,10 @@ class ExecuteTools:
 
     @classmethod
     def invoke(cls):
+        """
+        调用执行器执行
+        :return: 报告链接
+        """
         jenkins = Jenkins(cls.BASE_URL, cls.USERNAME, cls.PASSWORD)
         # 得到ck18job的实例对象
         job_ck18 = jenkins.get_job(cls.JOB_NAME)
@@ -27,6 +31,7 @@ class ExecuteTools:
         # http://134.175.28.202:8081/job/ck18/9/allure/
         # jenkins服务的信息/job/jobname/构建的数据/allure/
         # 构建完成立刻获取到的构建数
+        # http://134.175.28.202:8081/job/ck18/43/allure/
         last_build_number = job_ck18.get_last_buildnumber()
         # print(last_build_number)
         while True:
