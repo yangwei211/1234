@@ -47,6 +47,8 @@ class TestCaseService(Resource):
 
         db.session.add(testcase)
         db.session.commit()
+        # 关闭当前的session连接
+        db.session.close()
         return {"error": 0, "msg": "post success"}
 
     def put(self):
@@ -66,6 +68,9 @@ class TestCaseService(Resource):
         # 返回被修改数据的id
         # 修改之后commit到数据库
         db.session.commit()
+        # 关闭当前的session连接
+        db.session.close()
+
         return {"error": 0, "msg": {"id": case}}
 
 
@@ -80,5 +85,7 @@ class TestCaseService(Resource):
         # 返回一个主键
         case = Testcase.query.filter_by(id=case_id).delete()
         db.session.commit()
+        db.session.close()
+
         app.logger.info(case)
         return {"error": 0, "msg": {"id": case}}
