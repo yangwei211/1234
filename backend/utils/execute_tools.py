@@ -15,16 +15,17 @@ class ExecuteTools:
         return jenkins.keys()
 
     @classmethod
-    def invoke(cls):
+    def invoke(cls, task):
         """
         调用执行器执行
+        task: 指定执行的用例
         :return: 报告链接
         """
         jenkins = Jenkins(cls.BASE_URL, cls.USERNAME, cls.PASSWORD)
         # 得到ck18job的实例对象
         job_ck18 = jenkins.get_job(cls.JOB_NAME)
         # 让你的job 进行构建, 需要和jenkins的job的参数名进行对应
-        job_ck18.invoke(build_params={"task": "python"})
+        job_ck18.invoke(build_params={"task": task})
         # 1. Jenkins 自动生成Junit.xml 报告，拿到之后解析xml文件，获取用例执行的信息
         # 2. 拿到allure 的数据信息，解析json文件，获取用例的执行
         # 3. 直接拿到allure 的链接，就是allure的报告信息

@@ -30,6 +30,9 @@ def router():
     """
     from backend.apis.testcases import TestCaseService
     api.add_resource(TestCaseService, "/testcase")
+    from backend.apis.task import TaskService
+    api.add_resource(TaskService, "/task")
+
 
 
 
