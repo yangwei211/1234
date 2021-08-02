@@ -23,6 +23,6 @@ class TestTask:
         :return:
         """
         # 用例的信息
-        data = {"nodeid": "test_setup_teardow.py"}
+        data = [{'id': 2, 'nodeid': 'test_setup_teardow.py', 'remark': '0'}]
         r = requests.post(self.base_url, json=data)
         assert r.status_code == 200

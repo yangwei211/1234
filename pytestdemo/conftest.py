@@ -4,6 +4,7 @@ __time__ = '2021/4/11 3:02 下午'
 """
 from typing import List
 import pytest
+import requests
 from Calculator import Calculator
 
 
@@ -44,11 +45,19 @@ def get_div_datas(request):
 def pytest_collection_modifyitems(session, config, items: List):
     print("这是收集所有测试用例的方法")
     print(items)
-    items.reverse()
+    # 遍历items
     for item in items:
-        item.name = item.name.encode('utf-8').decode('unicode-escape')
-        item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
-        if 'foo' in item.name:
-            item.add_marker(pytest.mark.foo)
-        elif 'last' in item.name:
-            item.add_marker(pytest.mark.last)
+        # 拿到每一个item对象，每个item对象都有nodeid
+        # data2 = {"nodeid": "xxxx", "remark": "备注3"}
+        # 通过发送请求的方式，先拿到每一pytest 用例的nodeid
+        # 添加到请求体中，然后执行测试用例
+        data2 = {"nodeid": item.nodeid, "remark": item.name}
+        print(data2)
+        r = requests.post("http://127.0.0.1:5000/testcase", json=data2)  # items.reverse()
+    # for item in items:
+    #     item.name = item.name.encode('utf-8').decode('unicode-escape')
+    #     item._nodeid = item.nodeid.encode('utf-8').decode('unicode-escape')
+    #     if 'foo' in item.name:
+    #         item.add_marker(pytest.mark.foo)
+    #     elif 'last' in item.name:
+    #         item.add_marker(pytest.mark.last)

@@ -199,8 +199,18 @@ export default {
       this.close();
     },
     executeCase(){
-      // 执行测试用例
+      // 执行测试用例，同时新增一条任务记录
       console.log(this.selected)
+      this.$api.task.addTask(this.selected).then((result) => {
+        console.log(result)
+        // 提升用户体验，用例执行完成之后给予提示
+        if(result.data.error===0){
+          alert("用例执行成功，请到测试任务页面进行查看")
+        }
+        else{
+          alert("用例未执行成功，请检查日志信息")
+        }
+      })
     }
     
   }
